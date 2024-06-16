@@ -11,9 +11,12 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
+    "axios": "^1.7.2",
     "primevue": "^3.52.0",
+    "rxjs": "^7.8.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

@@ -18,7 +18,7 @@
                     <label for="email">Senha</label>
                     <InputText v-model="userLoginForm.password" type="password" class="p-4 rounded-md bg-slate-300" :class="v$.userLoginForm.email.$invalid&&v$.$dirty?'border-red-500 border':'border-none'"/>
                     <small id="email-help"   class="text-red-500" :class=" v$.userLoginForm.password.$invalid&&v$.$dirty?'block':'hidden'">Formato de senha inválido</small>
-                    {{  }}
+                 
                 </div>
                 <div>
                     <Button @click="submitLogin" type="submit" label="Fazer Login"
@@ -42,6 +42,8 @@
 import { useVuelidate } from '@vuelidate/core'
 import { required, email} from '@vuelidate/validators'
 import {isValidPassword} from "@/utils/regex.util"
+import {LoginService} from "./login.service"
+
 export default {
     setup() {
         return { v$: useVuelidate() }
@@ -62,15 +64,21 @@ export default {
             }
         }
     },
+    computed:{
+        service(){
+            return new LoginService()
+        }
+    }, 
     methods: {
         async submitLogin() {
             const result = await this.v$.$validate()
             if (!result) {
                 // notify user form is invalid
-                console.log(this.v$, 'invalido')
+             return    console.log(this.v$, 'invalido', this.userLoginForm)
                 
             }
-            console.log(this.v$)
+            this.service.user.subscribe({next:response=>console.log(response)})
+            this.service.login(this.userLoginForm)
         }, 
         
     }
